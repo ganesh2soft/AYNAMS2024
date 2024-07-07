@@ -1,0 +1,16 @@
+POST
+http://localhost:9105/api/v1/order/addOrder
+{
+    "productId": 4,
+    "itemsOrdered": 10,
+    "unitPrice": 1200,
+    "totalCost": 12000
+}
+GET ALL
+http://localhost:9105/api/v1/order/allOrders
+
+GET
+http://localhost:9105/api/v1/order/getOrder/{orderId}
+
+DELETE
+http://localhost:9105/api/v1/order/deleteOrder/{OrderId}

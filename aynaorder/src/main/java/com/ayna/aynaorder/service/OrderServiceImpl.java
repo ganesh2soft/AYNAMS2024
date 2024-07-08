@@ -19,7 +19,14 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderToStockService orderToStockService;
-
+	
+	@Override
+    public int preCheckSrv(Long productId) {
+    	int checker = orderToStockService.getStockUnits(productId);
+    	System.out.println("Stock Availabity of product mentioned" + checker);
+    	return checker;
+    }
+	
 	@Override
 	public ResponseEntity<Order> saveOrder(Order order) {
 

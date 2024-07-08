@@ -44,4 +44,9 @@ public class OrderCtrl {
 	public Order fetchOrderByOrderId(@PathVariable Long orderId) {
 		return orderService.getOrderById(orderId);
 	}
+	
+	@GetMapping("/precheckstock/{productId}")
+	public int preChecker(@PathVariable Long productId) {
+		return orderService.preCheckSrv(productId);
+	}
 }

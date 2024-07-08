@@ -5,22 +5,25 @@ http://localhost:9100/api/v1/product/addProduct
     "sellerName": "Alabama Ltd",
     "productName": "Avenger",
     "categoryName": "Toys",   
+    "unitPrice":250,
     "listedDate": "2024-06-30T12:00:00Z",
-    "imageUrl": "http://example.com/mobile.jpg"
+    "imageUrl": "assets/img01.jpg"
 }
 {
     "sellerName": "XYZ Electronics",
     "productName": "Smart Watch",
     "categoryName": "Electronics",
     "listedDate": "2024-07-01T08:30:00Z",
-    "imageUrl": "http://example.com/smartwatch.jpg"
+     "unitPrice":250,
+    "imageUrl": "assets/img02.jpg"
 }
 {
     "sellerName": "Best Books Inc.",
     "productName": "The Great Gatsby",
     "categoryName": "Books",
     "listedDate": "2024-06-29T15:45:00Z",
-    "imageUrl": "http://example.com/greatgatsby.jpg"
+     "unitPrice":450,
+    "imageUrl": "assets/img03.jpg"
 }
 
 {
@@ -28,7 +31,8 @@ http://localhost:9100/api/v1/product/addProduct
     "productName": "Men's Leather Jacket",
     "categoryName": "Fashion",
     "listedDate": "2024-06-28T10:00:00Z",
-    "imageUrl": "http://example.com/leatherjacket.jpg"
+     "unitPrice":1000,
+    "imageUrl": assets/img04.jpg"
 }
 
 {
@@ -36,14 +40,17 @@ http://localhost:9100/api/v1/product/addProduct
     "productName": "Organic Apples",
     "categoryName": "Groceries",
     "listedDate": "2024-07-02T14:20:00Z",
-    "imageUrl": "http://example.com/organicapples.jpg"
+     "unitPrice":700,
+     
+    "imageUrl": "assets/img05.jpg"
 }
 {
     "sellerName": "Pet Paradise",
     "productName": "Cat Toy Set",
     "categoryName": "Pets",
     "listedDate": "2024-06-27T11:10:00Z",
-    "imageUrl": "http://example.com/cattoy.jpg"
+     "unitPrice":2502
+    "imageUrl": "assets/img06.jpg"
 }
 
 

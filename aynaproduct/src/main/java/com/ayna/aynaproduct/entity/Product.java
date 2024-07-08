@@ -33,6 +33,9 @@ public class Product {
 	@CreationTimestamp
 	private Date listedDate;
 	
+	@Column(name = "unit_price")
+	private int unitPrice;
+	
 	@Column(name="image_url")
 	private String imageUrl;
 
@@ -76,6 +79,14 @@ public class Product {
 		this.listedDate = listedDate;
 	}
 
+	public int getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(int unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
 	public String getImageUrl() {
 		return imageUrl;
 	}
@@ -86,7 +97,7 @@ public class Product {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(categoryName, imageUrl, listedDate, productId, productName, sellerName);
+		return Objects.hash(categoryName, imageUrl, listedDate, productId, productName, sellerName, unitPrice);
 	}
 
 	@Override
@@ -100,23 +111,26 @@ public class Product {
 		Product other = (Product) obj;
 		return Objects.equals(categoryName, other.categoryName) && Objects.equals(imageUrl, other.imageUrl)
 				&& Objects.equals(listedDate, other.listedDate) && Objects.equals(productId, other.productId)
-				&& Objects.equals(productName, other.productName) && Objects.equals(sellerName, other.sellerName);
+				&& Objects.equals(productName, other.productName) && Objects.equals(sellerName, other.sellerName)
+				&& unitPrice == other.unitPrice;
 	}
 
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", sellerName=" + sellerName + ", productName=" + productName
-				+ ", categoryName=" + categoryName + ", listedDate=" + listedDate + ", imageUrl=" + imageUrl + "]";
+				+ ", categoryName=" + categoryName + ", listedDate=" + listedDate + ", unitPrice=" + unitPrice
+				+ ", imageUrl=" + imageUrl + "]";
 	}
 
 	public Product(Long productId, String sellerName, String productName, String categoryName, Date listedDate,
-			String imageUrl) {
+			int unitPrice, String imageUrl) {
 		super();
 		this.productId = productId;
 		this.sellerName = sellerName;
 		this.productName = productName;
 		this.categoryName = categoryName;
 		this.listedDate = listedDate;
+		this.unitPrice = unitPrice;
 		this.imageUrl = imageUrl;
 	}
 
@@ -124,6 +138,8 @@ public class Product {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 	
 	
 

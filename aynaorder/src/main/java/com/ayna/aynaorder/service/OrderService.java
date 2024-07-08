@@ -16,4 +16,5 @@ public interface OrderService {
 
 	public Order getOrderById(Long orderId);
 
+	public int preCheckSrv(Long productId);
 }

@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface OrderToStockService {
 
 	@GetMapping("/getstock/{productId}")
-	int getStockUnits(@PathVariable int productId);
+	int getStockUnits(@PathVariable("productId") Long productId);
 }

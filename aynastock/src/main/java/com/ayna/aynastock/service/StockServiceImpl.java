@@ -36,7 +36,6 @@ public class StockServiceImpl implements StockService {
 			Stock existingStock = optionalStock.get();
 			// Update fields
 			existingStock.setProductId(stock.getProductId());
-			existingStock.setUnitPrice(stock.getUnitPrice());
 			existingStock.setStockUnits(stock.getStockUnits());
 
 			return stockRepo.save(existingStock);

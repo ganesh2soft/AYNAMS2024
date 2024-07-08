@@ -18,7 +18,7 @@ public class Order {
 	private Long orderId;
            
     @Column(name="product_id")
-	private int productId;   
+	private Long productId;   
     
     @Column(name="items_ordered")
 	private int itemsOrdered;
@@ -37,11 +37,11 @@ public class Order {
 		this.orderId = orderId;
 	}
 
-	public int getProductId() {
+	public Long getProductId() {
 		return productId;
 	}
 
-	public void setProductId(int productId) {
+	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
 
@@ -84,7 +84,8 @@ public class Order {
 			return false;
 		Order other = (Order) obj;
 		return itemsOrdered == other.itemsOrdered && Objects.equals(orderId, other.orderId)
-				&& productId == other.productId && totalCost == other.totalCost && unitPrice == other.unitPrice;
+				&& Objects.equals(productId, other.productId) && totalCost == other.totalCost
+				&& unitPrice == other.unitPrice;
 	}
 
 	@Override
@@ -93,7 +94,7 @@ public class Order {
 				+ ", unitPrice=" + unitPrice + ", totalCost=" + totalCost + "]";
 	}
 
-	public Order(Long orderId, int productId, int itemsOrdered, int unitPrice, int totalCost) {
+	public Order(Long orderId, Long productId, int itemsOrdered, int unitPrice, int totalCost) {
 		super();
 		this.orderId = orderId;
 		this.productId = productId;
@@ -107,6 +108,7 @@ public class Order {
 		// TODO Auto-generated constructor stub
 	}
 
+	
 
 
 

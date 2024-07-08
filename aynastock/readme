@@ -4,7 +4,7 @@ http://localhost:9102/api/v1/stock/addStock
     "stockId": 3,
     "productId": 5,
     "stockUnits": 110,
-    "unitPrice": 45000
+    
 }
 
 GET

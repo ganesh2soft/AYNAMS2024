@@ -28,9 +28,6 @@ public class Stock {
 	@Column(name = "stock_units")
 	private int stockUnits;
 
-	@Column(name = "unit_price")
-	private int unitPrice;
-
 	public Long getStockId() {
 		return stockId;
 	}
@@ -55,17 +52,9 @@ public class Stock {
 		this.stockUnits = stockUnits;
 	}
 
-	public int getUnitPrice() {
-		return unitPrice;
-	}
-
-	public void setUnitPrice(int unitPrice) {
-		this.unitPrice = unitPrice;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(productId, stockId, stockUnits, unitPrice);
+		return Objects.hash(productId, stockId, stockUnits);
 	}
 
 	@Override
@@ -77,27 +66,26 @@ public class Stock {
 		if (getClass() != obj.getClass())
 			return false;
 		Stock other = (Stock) obj;
-		return productId == other.productId && Objects.equals(stockId, other.stockId) && stockUnits == other.stockUnits
-				&& unitPrice == other.unitPrice;
+		return productId == other.productId && Objects.equals(stockId, other.stockId) && stockUnits == other.stockUnits;
 	}
 
 	@Override
 	public String toString() {
-		return "Stock [stockId=" + stockId + ", productId=" + productId + ", stockUnits=" + stockUnits + ", unitPrice="
-				+ unitPrice + "]";
+		return "Stock [stockId=" + stockId + ", productId=" + productId + ", stockUnits=" + stockUnits + "]";
 	}
 
-	public Stock(Long stockId, int productId, int stockUnits, int unitPrice) {
+	public Stock(Long stockId, int productId, int stockUnits) {
 		super();
 		this.stockId = stockId;
 		this.productId = productId;
 		this.stockUnits = stockUnits;
-		this.unitPrice = unitPrice;
 	}
 
 	public Stock() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	
 
 }

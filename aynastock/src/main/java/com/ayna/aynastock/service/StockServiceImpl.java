@@ -43,12 +43,28 @@ public class StockServiceImpl implements StockService {
 		return null; // Return null if stock with given ID not found
 	}
 
-	public int getStockUnitsByProductId(int productId) {
+	public int getStockUnitsByProductId(Long productId) {
 		Stock stock = stockRepo.findByProductId(productId);
 		if (stock != null) {
 			return stock.getStockUnits();
 		} else {
 			throw new RuntimeException("Stock with productId " + productId + " not found");
+		}
+	}
+
+	
+	public Stock updateStockbyProdsrv(Long productId, int stockUnits) {
+		System.out.println("I received the ");
+		Stock stock = stockRepo.findByProductId(productId);
+				if (stock != null) {
+			System.out.println("Enter to non null "+ stock);
+			System.out.println("Received stock"+stockUnits);
+			stock.setStockUnits(stockUnits);
+			System.out.println("Enter to non null after setting stock "+ stock);
+            return stockRepo.save(stock);
+			
+		} else {
+			throw new RuntimeException("Update Failed " + productId );
 		}
 	}
 }

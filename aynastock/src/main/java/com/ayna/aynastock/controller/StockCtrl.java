@@ -19,7 +19,8 @@ import com.ayna.aynastock.service.StockService;
 
 @RestController
 @RequestMapping("/api/v1/stock")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin("*")
+//@CrossOrigin(origins = "http://localhost:4200" ,allowedHeaders = "*", exposedHeaders = {"Content-Type"})
 //, allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST,
 //		RequestMethod.PUT, RequestMethod.DELETE })
 public class StockCtrl {
@@ -53,10 +54,28 @@ public class StockCtrl {
 
 		return ResponseEntity.ok(updated);
 	}
+	
+	/*
+	 * Below @GetMapping @PutMapping can be used BY FEIGN CLIENT (AYNAORDER MICRO)
+	 */
 	@GetMapping("/getstock/{productId}")
-	public int getStockUnits(@PathVariable int productId) {
+	public int getStockUnits(@PathVariable Long productId) {
         int stockUnits = stockService.getStockUnitsByProductId(productId);
         return stockUnits;
     }
+	
+	
+	@PutMapping("/updateStockbyProd/{productId}/{stockUnits}")
+	public ResponseEntity<Stock> updateStockbyProdCtrl(@PathVariable("productId") Long productId, @PathVariable("stockUnits")int stockUnits) {
+		Stock updated = stockService.updateStockbyProdsrv(productId, stockUnits);
+		
+		if (updated == null) {
+			return ResponseEntity.notFound().build();
+		}
+
+		return ResponseEntity.ok(updated);
+	}
+	
+	
 	
 }

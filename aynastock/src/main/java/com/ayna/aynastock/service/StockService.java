@@ -16,5 +16,7 @@ public interface StockService {
 
 	public Stock updateStock(@PathVariable("stockId") Long stockId, Stock stock);
 
-	public int getStockUnitsByProductId(int productId);
+	public Stock updateStockbyProdsrv(Long productId, int stockUnits);
+	
+	public int getStockUnitsByProductId(Long productId);
 }

@@ -49,6 +49,9 @@ public class OrderServiceImpl implements OrderService {
 		} else {
 			// Sufficient stock, proceed with saving the order
 			Order savedOrder = orderRepo.save(order);
+	//	System.out.println("Before Triggering Feign put"+checker);
+	//	orderToStockService.updateStockbyProdCtrl(order.getProductId(), checker);
+	//	System.out.println("After Triggering Feign put"+checker);
 			return ResponseEntity.status(HttpStatus.CREATED).body(savedOrder);
 		}
 	}
@@ -69,5 +72,11 @@ public class OrderServiceImpl implements OrderService {
 	public Order getOrderById(Long orderId) {
 		Optional<Order> optionalOrder = orderRepo.findById(orderId);
 		return optionalOrder.orElseThrow(() -> new RuntimeException("Order not found with orderId: " + orderId));
+	}
+
+	@Override
+	public void dummyUpdateStocksrv(Long productId, int stockUnits) {
+		orderToStockService.updateStockbyProdCtrl(productId, stockUnits);
+		
 	}
 }

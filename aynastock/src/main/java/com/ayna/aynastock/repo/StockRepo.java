@@ -7,5 +7,6 @@ import com.ayna.aynastock.entity.Stock;
 
 @Repository
 public interface StockRepo extends JpaRepository<Stock, Long> {
-	Stock findByProductId(int productId);
+	Stock findByProductId(Long productId);
+	
 }

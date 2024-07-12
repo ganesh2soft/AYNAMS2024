@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: apigateway-deployment
+  name: aynaapigateway
 spec:
   replicas: 1  # Number of instances (pods) to run
   selector:
     matchLabels:
-      app: apigateway
+      app: aynaapigateway
   template:
     metadata:
       labels:
-        app: apigateway
+        app: aynaapigateway
     spec:
       containers:
-      - name: apigateway
-        image: ganesh2soft/apigateway:latest # Replace with your Docker image name
+      - name: aynaapigateway
+        image: ganesh2soft/aynaapigateway:latest # Replace with your Docker image name
         imagePullPolicy: IfNotPresent  
         
         ports:

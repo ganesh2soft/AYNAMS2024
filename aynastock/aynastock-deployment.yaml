@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: apigateway-deployment
+  name: aynastock
 spec:
   replicas: 1  # Number of instances (pods) to run
   selector:
     matchLabels:
-      app: apigateway
+      app: aynastock
   template:
     metadata:
       labels:
-        app: apigateway
+        app: aynastock
     spec:
       containers:
-      - name: apigateway
-        image: ganesh2soft/apigateway:latest # Replace with your Docker image name
+      - name: aynastock
+        image: ganesh2soft/aynastock:latest # Replace with your Docker image name
         imagePullPolicy: IfNotPresent  
         
         ports:
-        - containerPort: 9200  # Port that your Spring Boot application listens on inside the container
+        - containerPort: 9102  # Port that your Spring Boot application listens on inside the container

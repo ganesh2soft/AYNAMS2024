@@ -9,5 +9,5 @@ spec:
     - protocol: TCP
       port: 80  # Service port (port exposed on the Service)
       targetPort: 9105  # Port your application is listening on inside the container
-      nodePort: 30010  # NodePort number (replace with your desired port number)
+      nodePort: 30019  # NodePort number (replace with your desired port number)
   type: NodePort  # Expose the Service on a NodePort

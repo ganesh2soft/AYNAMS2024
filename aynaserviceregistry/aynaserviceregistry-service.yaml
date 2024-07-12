@@ -7,7 +7,7 @@ spec:
     app: aynaserviceregistry  # Must match the labels in your Deployment
   ports:
     - protocol: TCP
-      port: 80  # Service port (port exposed on the Service)
+      port: 8761  # Service port (port exposed on the Service)
       targetPort: 8761  # Port your application is listening on inside the container
-      nodePort: 30039  # NodePort number (replace with your desired port number)
-  type: NodePort  # Expose the Service on a NodePort
+  #    nodePort: 30039  # NodePort number (replace with your desired port number)
+ # type: NodePort  # Expose the Service on a NodePort

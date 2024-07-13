@@ -1,11 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: aynaproduct-db-conf
+  name: mysql-initdb
 data:
- host: mysql
- name: productdb 
- init.sql: |
+  init.sql: |
     CREATE DATABASE IF NOT EXISTS orderdb;
     CREATE DATABASE IF NOT EXISTS paymentdb;
     CREATE DATABASE IF NOT EXISTS productdb;

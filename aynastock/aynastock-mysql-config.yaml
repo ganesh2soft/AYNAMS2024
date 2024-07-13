@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: db-conf
+  name: aynastock-db-conf
 data:
  host: mysql
  name: stockdb

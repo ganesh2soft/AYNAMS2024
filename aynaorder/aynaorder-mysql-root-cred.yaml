@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: db-root-credentials
+  name: aynaorder-db-root-credentials
 data:
  password: UEBzc3cwcmQ=
  

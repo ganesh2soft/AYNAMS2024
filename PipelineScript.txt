@@ -1,0 +1,154 @@
+pipeline {
+    agent any
+
+    tools {
+        // Define the Maven tool with the configured name from Jenkins Global Tool Configuration
+        maven 'Maven'
+    }
+
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scmGit(
+                        branches: [[name: '*/main']],
+                        extensions: [],
+                        userRemoteConfigs: [[url: 'https://github.com/ganesh2soft/AYNAMS2024.git']]
+                )
+            }
+        }
+
+        stage('Build Projects') {
+            steps {
+                script {
+                    // Build each project using Maven
+                    def projects = ['aynaapigateway', 'aynaorder', 'aynaproduct','aynaserviceregistry', 'aynastock',]
+
+                    projects.each { project ->
+                        dir(project) {
+                            echo "Building ${project}..."
+                            bat 'mvn clean install'
+                        }
+                    }
+                }
+            }
+        }
+       
+        stage('Build Docker image') {
+            steps {
+                script {
+                    def projects =   ['aynaapigateway', 'aynaorder', 'aynaproduct','aynaserviceregistry', 'aynastock',]
+
+                    projects.each { project ->
+                        dir(project) {
+                            echo "Dockering ${project}..."
+                            bat "docker build -t ganesh2soft/${project} ."
+                        }
+                    }
+
+                }
+            }
+        }
+        /*
+
+        stage('Pushing Docker image') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'dochubganesh2soft', variable: 'DOCHUBPWD')]) {
+                        bat "docker login -u ganesh2soft -p ${DOCHUBPWD}"
+                        def projects = ['apigateway', 'articlesprbootapp', 'eurekaclient', 'eurekaserver']
+
+                        projects.each { project ->
+                            dir(project) {
+                                echo "Dockering ${project}..."
+                                bat "docker push ganesh2soft/${project}"
+                            }
+
+                        }
+
+                    }
+
+                }
+            }
+
+        }
+        */
+        stage('Deploy to Kubernetes') {
+            steps {
+                script{
+                    bat "minikube delete"
+                    bat "minikube start"
+                    def projects =  ['aynaapigateway', 'aynaorder', 'aynaproduct','aynaserviceregistry', 'aynastock',]
+                    def withsqlprojects=['aynaorder','aynastock', 'aynaproduct']
+                    def notsqlprojects=['aynaapigateway', 'aynaserviceregistry']
+                    withsqlprojects.each { project ->
+                        dir(project) {
+                            echo "Loading ${project}...into Minikube "
+                            bat "minikube image load ganesh2soft/${project}"
+                        }
+                    }
+                    notsqlprojects.each { project ->
+                        dir(project) {
+                            echo "Loading ${project}...into Minikube "
+                            bat "minikube image load ganesh2soft/${project}"
+                        }
+                    }
+                    
+                    withsqlprojects.each { project ->
+                        dir(project) {
+                            echo "Applying Deployment and Service yaml to  ${project}"
+                            bat "kubectl apply -f ${project}-deployment.yaml"
+                            bat "kubectl apply -f ${project}-service.yaml"
+                            bat "kubectl apply -f ${project}-mysql-deployment.yaml "
+                            bat "kubectl apply -f ${project}-mysql-service.yaml "
+                            bat "kubectl apply -f ${project}-mysql-volume.yaml "
+                            bat "kubectl apply -f ${project}-mysql-config.yaml"
+                            bat "kubectl apply -f ${project}-mysql-root-cred.yaml"
+                        }
+                    }
+                    notsqlprojects.each { project ->
+                        dir(project) {
+                            echo "Applying Deployment and Service yaml to  ${project}"
+                            bat "kubectl apply -f ${project}-deployment.yaml"
+                            bat "kubectl apply -f ${project}-service.yaml"
+                        }
+                    }
+                    bat "kubectl get pods"
+                    bat "kubectl get services"
+                    bat "minikube addons enable dashboard"
+                    bat "minikube addons enable metrics-server"
+                    bat "minikube stop"
+                    bat "minikube start"
+                    bat "kubectl cluster-info"
+
+                }
+
+            }
+
+        }
+        stage('Parallel Loading of Services and Dashboard')
+        {
+            parallel{
+                stage('Run minikube dashboard') {
+                    steps {
+                        script {
+                            // Run minikube dashboard command
+                            bat 'minikube dashboard'
+                            echo 'Dashboard command completed'
+                        }
+                    }
+                }
+                stage('Run minikube service') {
+                    steps {
+                        script {
+                            // Run minikube dashboard command
+                            bat "minikube service --all"
+                            echo 'Servicec command completed'
+                        }
+                    }
+                }
+
+            }
+        }
+    }}
+

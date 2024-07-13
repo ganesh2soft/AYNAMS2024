@@ -38,7 +38,7 @@ spec:
         - name: MYSQL_HOST # Setting Host from a 'ConfigMap'
           valueFrom:
             configMapKeyRef:
-              name: db-conf
+              name: aynastock-db-conf
               key: host
         ports:
         - containerPort: 3306

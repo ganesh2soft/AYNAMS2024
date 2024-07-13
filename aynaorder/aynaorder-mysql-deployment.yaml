@@ -46,11 +46,11 @@ spec:
         volumeMounts:        # Mounting voulume obtained from Persistent Volume Claim
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql #This is the path in the container on which the mounting will take place.
-        - name: mysql-initdb
-          configMap:
-            name: mysql-initdb
+        
       volumes:
       - name: mysql-persistent-storage # Obtaining 'vloume' from PVC
         persistentVolumeClaim:
           claimName: mysql-pv-claim
-          
+      - name: mysql-initdb
+        configMap:
+          name: mysql-initdb 

@@ -5,7 +5,4 @@ metadata:
 data:
  host: mysql
  name: productdb 
- init.sql: |
-    CREATE DATABASE IF NOT EXISTS orderdb;
-    CREATE DATABASE IF NOT EXISTS paymentdb;
-    CREATE DATABASE IF NOT EXISTS productdb;
+ 

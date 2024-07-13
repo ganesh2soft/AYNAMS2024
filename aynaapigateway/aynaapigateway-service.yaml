@@ -7,7 +7,7 @@ spec:
     app: aynaapigateway  # Must match the labels in your Deployment
   ports:
     - protocol: TCP
-      port: 80  # Service port (port exposed on the Service)
+      port: 9200  # Service port (port exposed on the Service)
       targetPort: 9200  # Port your application is listening on inside the container
       nodePort: 30009  # NodePort number (replace with your desired port number)
   type: NodePort  # Expose the Service on a NodePort

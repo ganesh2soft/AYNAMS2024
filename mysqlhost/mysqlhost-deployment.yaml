@@ -31,16 +31,12 @@ spec:
                 name: mysqlhost-root-credentials # Name of the 'Secret'
                 key: password   # 'key' inside the Secret which contains required 'value'
         
-           - name: MYSQL_DATABASE # Setting Database Name from a 'ConfigMap'
-             valueFrom:
-              configMapKeyRef:
-                name: mysqlhost-db-conf
-                key: name
+           
            - name: MYSQL_HOST # Setting Host from a 'ConfigMap'
              valueFrom:
               configMapKeyRef:
-                 name: mysqlhost-db-conf
-                 key: host
+                name: mysqlhost-db-conf
+                key: host
           ports:
            - containerPort: 3306
               

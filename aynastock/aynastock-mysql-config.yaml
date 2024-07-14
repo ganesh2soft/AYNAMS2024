@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: aynastock-db-conf
 data:
- host: mysql
+ host: mysqlhost
  name: stockdb
  

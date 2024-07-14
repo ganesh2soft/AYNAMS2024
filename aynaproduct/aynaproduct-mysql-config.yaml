@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: aynaproduct-db-conf
 data:
- host: mysql
+ host: mysqlhost
  name: productdb 
  

@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: aynaorder-db-conf
 data:
- host: mysql
+ host: mysqlhost
  name: orderdb 

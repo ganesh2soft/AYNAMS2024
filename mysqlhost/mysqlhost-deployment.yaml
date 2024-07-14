@@ -1,48 +1,48 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: mysqlhost
   labels:
-    app: mysql
+    app: mysqlhost
     tier: database
 spec:
   selector: # mysql Pod Should contain same labels 
     matchLabels:
-      app: mysql
+      app: mysqlhost
       tier: database
   strategy:
     type: Recreate
   template:
     metadata:
       labels: # Must match 'Service' and 'Deployment' selectors
-        app: mysql
+        app: mysqlhost
         tier: database
     spec:
       containers:
-      - image: mysql:8.4 # image from docker-hub
+      - image: ganesh2soft/mysql:8.4 # image from docker-hub
 #        args:
 #          - "--ignore-db-dir=lost+found" # Workaround for https://github.com/docker-library/mysql/issues/186
-        name: mysql 
+        name: mysqlhost 
         env:
         - name: MYSQL_ROOT_PASSWORD # Setting Root Password of mysql From a 'Secret'
           valueFrom:
             secretKeyRef:
-              name: aynaproduct-db-root-credentials # Name of the 'Secret'
+              name: mysqlhost-root-credentials # Name of the 'Secret'
               key: password   # 'key' inside the Secret which contains required 'value'
         
         - name: MYSQL_DATABASE # Setting Database Name from a 'ConfigMap'
           valueFrom:
             configMapKeyRef:
-              name: aynaproduct-db-conf
+              name: mysqlhost-db-conf
               key: name
         - name: MYSQL_HOST # Setting Host from a 'ConfigMap'
           valueFrom:
             configMapKeyRef:
-              name: aynaproduct-db-conf
+              name: mysqlhost-db-conf
               key: host
         ports:
         - containerPort: 3306
-          name: mysql
+          name: mysqlhost
         volumeMounts:        # Mounting voulume obtained from Persistent Volume Claim
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql #This is the path in the container on which the mounting will take place.

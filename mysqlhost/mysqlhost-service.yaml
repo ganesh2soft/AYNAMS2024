@@ -2,15 +2,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql  # DNS name 
+  name: mysqlhost  # DNS name 
   labels:
-    app: mysql
+    app: mysqlhost
     tier: database
 spec:
   ports:
     - port: 3306
       targetPort: 3306
   selector:       # mysql Pod Should contain same labels
-    app: mysql
+    app: mysqlhost
     tier: database
   clusterIP: None  # We Use DNS, Thus ClusterIP is not relevant

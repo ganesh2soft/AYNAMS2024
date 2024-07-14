@@ -33,7 +33,18 @@ pipeline {
                 }
             }
         }
-       
+        /*
+        stage('Database Image Creation') {
+            steps {
+                script {
+                    dir('mysqlhost') {
+                        bat "docker build -t ganesh2soft/mysqlhost ."
+                    }
+                }
+            }
+        }
+        */
+
         stage('Build Docker image') {
             steps {
                 script {
@@ -93,17 +104,25 @@ pipeline {
                             bat "minikube image load ganesh2soft/${project}"
                         }
                     }
-                    
+                    dir('mysqlhost'){
+                //  bat "minikube image load ganesh2soft/mysqlhost"
+                    bat "kubectl apply -f mysqlhost-deployment.yaml"
+                    bat "kubectl apply -f mysqlhost-service.yaml"
+                    bat "kubectl apply -f mysqlhost-volume.yaml "
+                    bat "kubectl apply -f mysqlhost-config.yaml"
+                    bat "kubectl apply -f mysqlhost-root-cred.yaml"
+                    }
                     withsqlprojects.each { project ->
                         dir(project) {
                             echo "Applying Deployment and Service yaml to  ${project}"
                             bat "kubectl apply -f ${project}-deployment.yaml"
                             bat "kubectl apply -f ${project}-service.yaml"
-                            bat "kubectl apply -f ${project}-mysql-deployment.yaml "
-                            bat "kubectl apply -f ${project}-mysql-service.yaml "
-                            bat "kubectl apply -f ${project}-mysql-volume.yaml "
-                            bat "kubectl apply -f ${project}-mysql-config.yaml"
-                            bat "kubectl apply -f ${project}-mysql-root-cred.yaml"
+                            //            bat "kubectl apply -f ${project}-mysql-deployment.yaml "
+                            //            bat "kubectl apply -f ${project}-mysql-service.yaml "
+                                      bat "kubectl apply -f ${project}-mysql-volume.yaml "
+                                      bat "kubectl apply -f ${project}-mysql-config.yaml"
+                                      bat "kubectl apply -f ${project}-mysql-root-cred.yaml"
+
                         }
                     }
                     notsqlprojects.each { project ->
@@ -127,28 +146,28 @@ pipeline {
 
         }
         stage('Parallel Loading of Services and Dashboard')
-        {
-            parallel{
-                stage('Run minikube dashboard') {
-                    steps {
-                        script {
-                            // Run minikube dashboard command
-                            bat 'minikube dashboard'
-                            echo 'Dashboard command completed'
+                {
+                    parallel{
+                        stage('Run minikube dashboard') {
+                            steps {
+                                script {
+                                    // Run minikube dashboard command
+                                    bat 'minikube dashboard'
+                                    echo 'Dashboard command completed'
+                                }
+                            }
                         }
+                        stage('Run minikube service') {
+                            steps {
+                                script {
+                                    // Run minikube dashboard command
+                                    bat "minikube service --all"
+                                    echo 'Servicec command completed'
+                                }
+                            }
+                        }
+
                     }
                 }
-                stage('Run minikube service') {
-                    steps {
-                        script {
-                            // Run minikube dashboard command
-                            bat "minikube service --all"
-                            echo 'Servicec command completed'
-                        }
-                    }
-                }
-
-            }
-        }
-    }}
-
+    }
+}

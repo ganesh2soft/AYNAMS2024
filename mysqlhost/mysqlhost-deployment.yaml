@@ -19,35 +19,36 @@ spec:
         tier: database
     spec:
       containers:
-      - image: mysql:8.4 # image from docker-hub
+        - name: mysqlhost 
+          image: mysql:8.4 # image from docker-hub
 #        args:
 #          - "--ignore-db-dir=lost+found" # Workaround for https://github.com/docker-library/mysql/issues/186
-        name: mysqlhost 
-        env:
-        - name: MYSQL_ROOT_PASSWORD # Setting Root Password of mysql From a 'Secret'
-          valueFrom:
-            secretKeyRef:
-              name: mysqlhost-root-credentials # Name of the 'Secret'
-              key: password   # 'key' inside the Secret which contains required 'value'
         
-        - name: MYSQL_DATABASE # Setting Database Name from a 'ConfigMap'
-          valueFrom:
-            configMapKeyRef:
-              name: mysqlhost-db-conf
-              key: name
-        - name: MYSQL_HOST # Setting Host from a 'ConfigMap'
-          valueFrom:
-            configMapKeyRef:
-              name: mysqlhost-db-conf
-              key: host
-        ports:
-        - containerPort: 3306
-          name: mysqlhost
-        volumeMounts:        # Mounting voulume obtained from Persistent Volume Claim
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql #This is the path in the container on which the mounting will take place.
+          env:
+           - name: MYSQL_ROOT_PASSWORD # Setting Root Password of mysql From a 'Secret'
+             valueFrom:
+              secretKeyRef:
+                name: mysqlhost-root-credentials # Name of the 'Secret'
+                key: password   # 'key' inside the Secret which contains required 'value'
+        
+           - name: MYSQL_DATABASE # Setting Database Name from a 'ConfigMap'
+             valueFrom:
+              configMapKeyRef:
+                name: mysqlhost-db-conf
+                key: name
+           - name: MYSQL_HOST # Setting Host from a 'ConfigMap'
+              valueFrom:
+               configMapKeyRef:
+                 name: mysqlhost-db-conf
+                 key: host
+          ports:
+           - containerPort: 3306
+              name: mysqlhost
+          volumeMounts:        # Mounting voulume obtained from Persistent Volume Claim
+           - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql #This is the path in the container on which the mounting will take place.
       volumes:
-      - name: mysql-persistent-storage # Obtaining 'vloume' from PVC
-        persistentVolumeClaim:
-          claimName: mysql-pv-claim
+        - name: mysql-persistent-storage # Obtaining 'vloume' from PVC
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim
       
